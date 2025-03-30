@@ -1,63 +1,63 @@
-/**
- * @fileoverview Main React component that includes the Blockly component.
- * @author samelh@google.com (Sam El-Husseini)
- */
+// src/App.js
+import React from "react";
+import "./App.css";
+import { BlocklyProvider } from "./contexts/BlocklyContext";
+import BlocklyWorkspace from "./Blockly/BlocklyWorkspace/BlocklyWorkspace";
+import CodeGeneratorButton from "./Blockly/CodeGenerate/CodeGeneratorButton";
+import { Block, Value, Field, Shadow } from "./Blockly/BlocklyComponents";
 
-import React from 'react';
-import './App.css';
+import "./blocks/customblocks";
+import "./generator/generator";
+import BoatMaze from "./Blockly/MazeGame/MazeGame";
 
-import logo from './logo.svg';
+function App() {
+  const [generatedCode, setGeneratedCode] = React.useState("");
 
-import BlocklyComponent, {Block, Value, Field, Shadow} from './Blockly';
+  const handleCodeGenerated = (code) => {
+    console.log(code);
+    setGeneratedCode(code);
+    // You can do more with the generated code here
+  };
 
-import './blocks/customblocks';
-import './generator/generator';
-
-function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <BlocklyComponent
-          readOnly={false}
-          trashcan={true}
-          media={'media/'}
-          move={{
-            scrollbars: true,
-            drag: true,
-            wheel: true,
-          }}
-          initialXml={`
-<xml xmlns="http://www.w3.org/1999/xhtml">
-<block type="controls_ifelse" x="0" y="0"></block>
-</xml>
-      `}>
-          <Block type="test_react_field" />
-          <Block type="controls_ifelse" />
-          <Block type="logic_compare" />
-          <Block type="logic_operation" />
-          <Block type="controls_repeat_ext">
-            <Value name="TIMES">
-              <Shadow type="math_number">
-                <Field name="NUM">10</Field>
-              </Shadow>
-            </Value>
-          </Block>
-          <Block type="logic_operation" />
-          <Block type="logic_negate" />
-          <Block type="logic_boolean" />
-          <Block type="logic_null" disabled="true" />
-          <Block type="logic_ternary" />
-          <Block type="text_charAt">
-            <Value name="VALUE">
-              <Block type="variables_get">
-                <Field name="VAR">text</Field>
-              </Block>
-            </Value>
-          </Block>
-        </BlocklyComponent>
-      </header>
-    </div>
+    <BlocklyProvider>
+      <div className="flex flex-row">
+        <div className="header w-[30%]">
+          <h1 className="text-2xl">My Blockly App</h1>
+          <CodeGeneratorButton
+            onGenerate={handleCodeGenerated}
+            className="generate-btn px-4 py-2 bg-blue-500 text-white rounded mt-4 "
+          />
+          <BoatMaze />
+          <pre className="w-full bg-gray-50 p-4 rounded mt-4 overflow-x-auto">
+            {generatedCode}
+          </pre>
+        </div>
+
+        <div className="workspace-container w-[70%]">
+          <BlocklyWorkspace
+            readOnly={false}
+            trashcan={true}
+            media={"media/"}
+            move={{
+              scrollbars: false,
+              drag: true,
+              wheel: true,
+            }}
+            initialXml={`
+              <xml xmlns="http://www.w3.org/1999/xhtml">
+                
+              </xml>
+            `}
+          >
+            <Block type="move_forward" />
+            <Block type="turn" />
+
+            <Block type="controls_repeat" />
+          </BlocklyWorkspace>
+        </div>
+      </div>
+    </BlocklyProvider>
   );
 }
 

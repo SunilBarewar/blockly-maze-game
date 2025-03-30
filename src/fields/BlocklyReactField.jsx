@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import * as Blockly from 'blockly/core';
+import * as Blockly from "blockly/core";
 
 class BlocklyReactField extends Blockly.Field {
   SERIALIZABLE = true;
@@ -9,7 +9,7 @@ class BlocklyReactField extends Blockly.Field {
   static fromJson(options) {
     // `this` might be a subclass of BlocklyReactField if that class doesn't
     // override the static fromJson method.
-    return new this(options['text']);
+    return new this(options["text"]);
   }
 
   showEditor_() {
@@ -22,7 +22,7 @@ class BlocklyReactField extends Blockly.Field {
 
     Blockly.DropDownDiv.showPositionedByField(
       this,
-      this.dropdownDispose_.bind(this),
+      this.dropdownDispose_.bind(this)
     );
   }
 
@@ -37,10 +37,10 @@ class BlocklyReactField extends Blockly.Field {
 
 class FieldRenderComponent extends React.Component {
   render() {
-    return <div style={{color: '#fff'}}>Hello from React!</div>;
+    return <div style={{ color: "#fff" }}>Hello from Sunil</div>;
   }
 }
 
-Blockly.fieldRegistry.register('field_react_component', BlocklyReactField);
+Blockly.fieldRegistry.register("field_react_component", BlocklyReactField);
 
 export default BlocklyReactField;

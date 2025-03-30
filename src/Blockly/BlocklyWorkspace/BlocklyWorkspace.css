@@ -1,0 +1,9 @@
+#blockly-div {
+  height: 85vh;
+  width: 100%;
+}
+.workspace-container {
+  position: relative;
+  /* width: 100%; */
+  height: 90vh;
+}
